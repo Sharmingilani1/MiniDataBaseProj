@@ -22,8 +22,8 @@
 
        <Button fx:id="TaBort" layoutX="569.0" layoutY="489.0" mnemonicParsing="false" onAction="#pushingDeleteTagg" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #F2563E;" text="Ta bort" />
        <Button fx:id="Uppdatera" layoutX="407.0" layoutY="489.0" mnemonicParsing="false" onAction="#pushingUpdateButton" prefHeight="26.0" prefWidth="140.0" style="-fx-background-color: #3452C9;" text="Uppdatera" />
-       <Button fx:id="readAnteckning" layoutX="17.0" layoutY="489.0" mnemonicParsing="false" onAction="#pushingreadAnteckningButton" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #2CAA61;" text="Skapa ny anteckning" />
-       <Button fx:id="nyAnteckning" layoutX="241.0" layoutY="489.0" mnemonicParsing="false" onAction="#pushingnyAnteckningButton" prefHeight="26.0" prefWidth="154.0" style="-fx-background-color: #2CAA61;" text="Läs in anteckning" />
+       <Button fx:id="readAnteckning" layoutX="17.0" layoutY="489.0" mnemonicParsing="false" onAction="#pushingreadAnteckningButton" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #2CAA61;" text="Läs in anteckning" />
+       <Button fx:id="nyAnteckning" layoutX="241.0" layoutY="489.0" mnemonicParsing="false" onAction="#pushingnyAnteckningButton" prefHeight="26.0" prefWidth="154.0" style="-fx-background-color: #2CAA61;" text="Skapa ny anteckning" />
 
        <ComboBox fx:id="comboBox" layoutX="14.0" layoutY="170.0" prefHeight="26.0" prefWidth="200.0" />
 

@@ -13,7 +13,8 @@ public class HelloController {
 
     private static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("hibernate");
 
-    private static ObservableList<String> OPTIONS = FXCollections.observableArrayList();
+
+//    private static ObservableList<String> OPTIONS = FXCollections.observableArrayList();
 
     public List<Notes> notes;
     public List<Notes> notes2;
@@ -46,7 +47,8 @@ public class HelloController {
     }
 
     @FXML
-     void initialize() {
+    void initialize() {
+        ObservableList<String> OPTIONS = FXCollections.observableArrayList();
 
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
@@ -66,7 +68,6 @@ public class HelloController {
         for (Notes n : notes) {
             OPTIONS.add(n.getTitle());
         }
-
         comboBox.setItems(OPTIONS);
     }
 
@@ -78,7 +79,7 @@ public class HelloController {
         transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Query query  = entityManager.createNativeQuery("INSERT INTO note (title, content) " +
+        Query query = entityManager.createNativeQuery("INSERT INTO note (title, content) " +
                 " VALUES(?,?)");
 
         query.setParameter(1, textFieldtitle.getCharacters().toString());
@@ -86,8 +87,8 @@ public class HelloController {
 
         query.executeUpdate();
 
-        Query query2  = entityManager.createNativeQuery("INSERT INTO tag (content) " +
-               " VALUES(?)");
+        Query query2 = entityManager.createNativeQuery("INSERT INTO tag (content) " +
+                " VALUES(?)");
 
         query2.setParameter(1, textFieldtagcontent.getCharacters().toString());
         query2.executeUpdate();
@@ -100,7 +101,7 @@ public class HelloController {
         tags2 = allNotesQuery2.getResultList();
 
 
-        Query query3  = entityManager.createNativeQuery("INSERT INTO Notetags (noteId, tagId) " +
+        Query query3 = entityManager.createNativeQuery("INSERT INTO Notetags (noteId, tagId) " +
                 " VALUES(?,?)");
 
         query3.setParameter(1, notes2.get(0).getNoteId());
@@ -108,10 +109,14 @@ public class HelloController {
         query3.executeUpdate();
         transaction.commit();
 
+        System.out.println("----- Data inserted -----");
+        initialize();
+
     }
 
     public void pushingreadAnteckningButton(ActionEvent e) {
 
+        initialize();
         int n = comboBox.getSelectionModel().getSelectedIndex();
 
         textFieldcontent.setText((notes.get(n).getContent()));
@@ -126,9 +131,12 @@ public class HelloController {
         textFieldtagid.setText(Integer.toString(tags.get(n).getTagId()));
 
         notetagId = (notetags.get(n).getnoteTagId());
+        System.out.println("----- Reading -----");
+
     }
 
 
+    // update query
     public void pushingUpdateButton(ActionEvent e) {
 
         String updatetitle = textFieldtitle.getCharacters().toString();
@@ -144,16 +152,19 @@ public class HelloController {
         transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Tags tagToUpdate = entityManager.find(Tags.class,tId);
+        Tags tagToUpdate = entityManager.find(Tags.class, tId);
         tagToUpdate.settagdata(updatetag);
 
-        Notes noteToUpdate = entityManager.find(Notes.class,nId);
-        noteToUpdate.setnotedata( updatetitle,updatecontent);
+        Notes noteToUpdate = entityManager.find(Notes.class, nId);
+        noteToUpdate.setnotedata(updatetitle, updatecontent);
 
         entityManager.merge(tagToUpdate);
         entityManager.merge(noteToUpdate);
 
         transaction.commit();
+        System.out.println("----- updated -----");
+        initialize();
+
     }
 
     public void pushingDeleteTagg(ActionEvent e) {
@@ -179,6 +190,10 @@ public class HelloController {
         entityManager.remove(tagsToBeRemoved);
         entityManager.flush();
         transaction.commit();
-    }
+
+        System.out.println("----- Deleted -----");
+        initialize();
 
     }
+
+}
